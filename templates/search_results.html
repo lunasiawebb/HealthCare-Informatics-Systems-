@@ -1,0 +1,35 @@
+<h1>{{ option }}</h1>
+
+{% if option == "Demographics" %}
+
+    {% for label, value in results.items() %}
+        <p>{{ label }}: {{ value }}</p>
+    {% endfor %}
+
+{% elif option == "Conditions" %}
+
+    {% for item in results %}
+        <p>{{ item["DESCRIPTION"] }}</p>
+    {% endfor %}
+
+{% elif option == "Allergies" %}
+
+    {% for item in results %}
+        <p><strong>{{ item["DESCRIPTION"] }}</strong></p>
+        <p>Type: {{ item["TYPE"] }}</p>
+        <p>Category: {{ item["CATEGORY"] }}</p>
+    {% endfor %}
+
+{% elif option == "Encounters" %}
+
+    {% for item in results %}
+        <p>Start: {{ item["START"] }}</p>
+        <p>Stop: {{ item["STOP"] }}</p>
+        <p>Class: {{ item["ENCOUNTERCLASS"] }}</p>
+        <p>Description: {{ item["DESCRIPTION"] }}</p>
+    {% endfor %}
+
+{% endif %}
+
+Return to <a href="/search">Search</a>
+Or <a href="/">Home</a>

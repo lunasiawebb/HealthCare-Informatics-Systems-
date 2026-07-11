@@ -1,0 +1,44 @@
+<!--
+  This is the main menu page for the EHR system.
+  It shows the user a few navigation options and connects them to Flask routes
+  defined in app.py.
+-->
+<head>
+  <meta charset="UTF-8"> <!-- Tells the browser which character set to use. -->
+  <title>EHR System</title> <!-- Sets the tab title shown in the browser. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+</head>
+<body>
+
+<h1> Welcome to the EHR System </h1> <!-- Main heading shown at the top of the page. -->
+  <ul> <!-- Creates a list of menu links for the user to click. -->
+        <li><a href="/add">Add Patient</a></li> <!-- Links to the add patient page route in Flask. -->
+        <li><a href="/search">Search Patient</a></li> <!-- Links to the search page route. -->
+        <li><a href="/addmenu">Add Information to Patient</a></li> <!-- Links to the page that adds patient information. -->
+  </ul>
+
+</body>
+
+<button id="menu-btn">☰</button> <!-- The button that opens the sidebar menu. -->
+
+<div id="sidebar"> <!-- The hidden side menu container. Its style comes from style.css. -->
+    <button id="close-btn">✕</button> <!-- The button that closes the sidebar. -->
+    <a href="/">Home</a> <!-- Takes the user back to the home page. -->
+    <a href="/search">Search Patient</a> <!-- Reuses the search route. -->
+    <a href="/addmenu">Add Information</a> <!-- Reuses the add-info route. -->
+    <a href="/reports">Reports</a> <!-- A placeholder link for a future reports page. -->
+</div>
+
+<script>
+const sidebar = document.getElementById("sidebar"); <!-- Stores the sidebar element so JavaScript can control it. -->
+
+document.getElementById("menu-btn").onclick = function () { //takes the menu button gives in a onclick function, sidebar 
+  // onclick calls sidebar.open which moves it, 
+  //so CSS has the different instances but js puts function behind it so the states change on click
+    sidebar.classList.add("open"); // Adds the CSS class "open" so the sidebar moves into view. -->
+};
+
+document.getElementById("close-btn").onclick = function () { //on click the sidebar.open state is removed
+    sidebar.classList.remove("open"); // Removes the CSS class so the sidebar slides back out. -->
+};
+</script>

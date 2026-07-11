@@ -1,0 +1,21 @@
+<head>
+  <meta charset="UTF-8"> <!-- Tells the browser which character set to use. -->
+  <title>Add Patient</title> <!-- Sets the tab title shown in the browser. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='add_patient.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+</head>
+<body>
+<h1>Add Patient</h1>
+
+<form method="POST">
+
+  {% for column in columns %}
+    {{column}}: <input name="{{column}}"><br>
+  {% endfor %}
+
+    <button type="submit">Add</button>
+
+</form>
+
+<a href="/">Home</a>
+
+</body>

@@ -1,0 +1,118 @@
+/*
+  This stylesheet controls the visual design of the EHR web pages.
+  It tells the browser how each HTML element should look and how the
+  sidebar menu should behave when it is opened or closed.
+  color palette
+*/
+
+
+body {
+  background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 100%); /* Creates a soft pink gradient background for the whole page. */
+  font-family: 'Segoe UI', Tahoma, sans-serif; /* Uses a clean, modern font for easy reading. */
+  margin: 0; /* Removes the default browser spacing around the page. */
+  padding: 40px 20px; /* Adds space around the content so it does not touch the edges. */
+  display: flex; /* Turns the body into a flex container so its children can be arranged easily. */
+  flex-direction: column; /* Stacks the elements vertically from top to bottom. */
+  align-items: center; /* Centers the content horizontally. */
+}
+
+h1 {
+  color: #d6336c; /* Makes the page title pink. */
+  font-size: 2.2rem; /* Sets the heading size to be large and clear. */
+  text-shadow: 1px 1px 2px rgba(214, 51, 108, 0.2); /* Adds a subtle shadow to make the text stand out. */
+  margin-bottom: 30px; /* Adds space below the title. */
+  text-align: center; /* Centers the title text. */
+}
+
+ul { 
+  list-style: none; /* Removes the bullet points from the list. */
+  padding: 0; /* Removes default padding from the list. */
+  width: 100%; /* Makes the list stretch across the available width. */
+  max-width: 350px; /* Limits how wide the menu can become. */
+}
+
+li {
+  margin-bottom: 15px; /* Adds space between each menu item. */
+}
+
+li a { 
+  display: block; /* Makes the link behave like a button box instead of inline text. */
+  background-color: #ff8fab; /* Gives the menu buttons a pink background. */
+  color: white; /* Makes the link text white so it is easy to read. */
+  text-decoration: none; /* Removes the underline from links. */
+  padding: 14px 20px; /* Adds space inside each button. */
+  border-radius: 12px; /* Rounds the corners of the button style. */
+  font-weight: 600; /* Makes the link text slightly bolder. */
+  text-align: center; /* Centers the text inside each button. */
+  box-shadow: 0 4px 10px rgba(255, 143, 171, 0.4); /* Adds a soft shadow for depth. */
+  transition: all 0.25s ease; /* Makes hover effects smooth. */
+}
+
+li a:hover {
+  background-color: #d6336c; /* Changes the button color when the mouse hovers over it. */
+  transform: translateY(-2px); /* Lifts the button slightly upward on hover. */
+  box-shadow: 0 6px 14px rgba(214, 51, 108, 0.5); /* Makes the shadow stronger on hover. */
+}
+
+li a:active {
+  transform: translateY(0); /* Returns the button to its original position when clicked. */
+}
+
+/*
+  The sidebar is hidden off-screen by default and only slides in when
+  the menu button is clicked. The HTML uses id="sidebar" and the script
+  adds the class "open" to make it appear.
+*/
+#sidebar {
+    position: fixed; /* Keeps the sidebar in one place even when the page scrolls. */
+    top: 0; /* Places the sidebar at the top of the screen. */
+    left: -250px; /* Moves it out of view to the left until opened. */
+    width: 250px; /* Sets the sidebar width. */
+    height: 100%; /* Makes it cover the full screen height. */
+    background: #ffb6c1; /* Gives the sidebar a light pink background. */
+    transition: left 0.3s ease; /* Makes the sliding effect smooth. */
+    padding-top: 60px; /* Adds space at the top so the content does not sit against the edge. */
+}
+
+#sidebar.open {
+    left: 0; /* Pulls the sidebar back into view when the open class is added. */
+}
+
+#sidebar a {
+    display: block; /* Makes each sidebar link appear as its own button-like block. */
+    padding: 15px; /* Adds space inside each sidebar link. */
+    text-decoration: none; /* Removes the underline from the links. */
+    color: black; /* Makes the sidebar text black for readability. */
+}
+
+#sidebar a:hover {
+    background: #ff8fab; /* Changes the background color when hovering over a sidebar link. */
+}
+
+#menu-btn {
+    color:#ffffff;
+    border-width: 0px;
+    background:#ff8fab;
+    position: fixed; /* Keeps the button in a fixed position on the screen. */
+    top: 20px; /* Places the button 20px from the top. */
+    left: 20px; /* Places the button 20px from the left. */
+    transition: all 0.25s ease; /* Makes hover effects smooth. */
+    box-shadow: 0 4px 10px #ffb6c1;
+
+}
+
+#menu-btn:hover {
+  background:#d6336c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px #ff8fab;
+}
+
+#menu-btn:active {
+  transform: translateY(0);
+}
+
+#close-btn {
+    position: absolute; /* Positions the close button relative to the sidebar container. */
+    top: 15px; /* Places it 15px from the top. */
+    right: 15px; /* Places it 15px from the right. */
+}

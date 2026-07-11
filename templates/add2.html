@@ -1,0 +1,13 @@
+<form method="POST" action="/addmenu">
+    <input type="hidden" name="stage" value="update">
+
+    <input type="hidden" name="patient_id" value="{patient_id}">
+
+    {% for column in category %}
+
+        {{ column }}: <input name="{{ column }}"><br>
+
+    {% endfor %}
+    <button type=submit>Submit</button>
+</form>
+<a href="/">Home</a>

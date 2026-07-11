@@ -1,0 +1,26 @@
+body {
+  background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 100%); /* Creates a soft pink gradient background for the whole page. */
+  font-family: 'Segoe UI', Tahoma, sans-serif; /* Uses a clean, modern font for easy reading. */
+  margin: 0; /* Removes the default browser spacing around the page. */
+  padding: 40px 20px; /* Adds space around the content so it does not touch the edges. */
+  display: flex; /* Turns the body into a flex container so its children can be arranged easily. */
+  flex-direction: column; /* Stacks the elements vertically from top to bottom. */
+  align-items: left; /* Centers the content horizontally. */
+}
+
+h1{
+    color: #d6336c; /* Makes the page title pink. */
+    font-size: 2.2rem; /* Sets the heading size to be large and clear. */
+    text-shadow: 1px 1px 2px rgba(214, 51, 108, 0.2); /* Adds a subtle shadow to make the text stand out. */
+    margin-bottom: 30px; /* Adds space below the title. */
+    text-align: center; /* Centers the title text. */
+}
+
+a {
+    display: block;
+    width: 50px ;
+    text-align: center;
+    border-radius: 5px ;
+    background-color: #e76a87;
+    color: black;
+}
