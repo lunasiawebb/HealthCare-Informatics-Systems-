@@ -1,9 +1,8 @@
 <form method="POST" action="/addmenu">
     <input type="hidden" name="stage" value="update">
-
-    <input type="hidden" name="patient_id" value="{patient_id}">
-
-    {% for column in category %}
+    <input type="hidden" name="category" value="{{category}}">
+    <input type="hidden" name="patient_id" value="{{patient_id}}">
+    {% for column in table %}
 
         {{ column }}: <input name="{{ column }}"><br>
 

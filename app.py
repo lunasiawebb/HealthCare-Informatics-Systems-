@@ -1,12 +1,52 @@
 from flask import Flask, request, render_template, session, redirect, url_for
 import ehr
+import bcrypt
 
 app = Flask(__name__)
+app.secret_key = "your_super_secret_key"
 
-@app.route("/login")
+@app.route("/")
+def nohome():
+    return redirect("/login")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST" :
+        user=request.form.get("USER")
+        pwrd=request.form.get("PASSWORD")
+        userinfo=ehr.login(user)
+        truepwd=userinfo["password_hash"]
+        truepwd=truepwd.encode("utf-8")
+        pwrd = pwrd.encode("utf-8")
+        if user and bcrypt.checkpw(pwrd, truepwd):
+            print("You have logged in")
+            
+            session["employee_id"]=userinfo["employee_id"]
+            session["user"]= userinfo["username"]
+            session["password"]=userinfo["password_hash"]
+            session["role"]=userinfo["role"]
+
+            return redirect("/menu")
+
+    return render_template("login.html")
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        first=request.form.get("FIRST")
+        last=request.form.get("LAST")
+        user=request.form.get("USER")
+        password=request.form.get("PASSWORD")
+        created=ehr.sign_up(first,last,user,password)
+
+        return redirect("/login")
+        
+    return render_template("signup.html")
 
 @app.route("/menu")
 def menu():
+    if "employee_id" not in session:
+        return redirect("/login")
+    
     return render_template("menu.html")
 
 @app.route("/add", methods=["GET", "POST"])
@@ -16,7 +56,7 @@ def add():
         patient_id = ehr.add_patient(request.form)
         return f"Success! ID: {patient_id}"
     #this is what is rendered when the user goes to the add route "GET" request
-    return render_template("add_patient.html", columns=ehr.d_columns[1:])  # Exclude the "Id" column since it will be generated automatically
+    return render_template("add_patient.html", columns=ehr.demographics[1:])  # Exclude the "Id" column since it will be generated automatically
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
@@ -43,7 +83,9 @@ def addinfo_patient():
            
             lname= request.form.get("LAST")
 
-            columns=ehr.d_columns
+            category= request.form.get("category")
+
+            table = ehr.get_tablecolumns(category)
            
             patient_id=ehr.find_patient(fname,lname)
 
@@ -51,16 +93,32 @@ def addinfo_patient():
             if patient_id:
 
                 #this is the stage==update page we redirect to after the form of add.html is submitted
-                return render_template("add2.html", patient_id=patient_id,category=columns) 
+                return render_template("add2.html", category=category, patient_id=patient_id, table=table) 
 
         elif stage == "update":
-            data=request.form
-           
-            patient_id= request.form.get("patient_id")
-            
-            patient_data=ehr.add_info(patient_id, data ) #this is the tablechoice that was passed from the add.html page to determine which table to add info too
+            data = {}
 
-            return render_template("addview.html", results=patient_data)
+            category=request.form.get("category")
+
+            table=ehr.get_tablecolumns(category)
+
+            for column in table:
+                data[column] = request.form.get(column)
+
+            patient_id= request.form.get("patient_id")
+
+            patient_data=ehr.add_info(patient_id, data, category, table)
+
+            print("This is the id", patient_id)
+            print("this is the data", data)
+            print("this is the category", category)
+            print("this is the table",table)
+            
+            #patient_data=ehr.add_info(patient_id, data, category, table)
+             #this is the tablechoice that was passed from the add.html page to determine which table to add info too
+
+            
+            #return render_template("addview.html", results=patient_data)
     
     return render_template("add.html") #the first page that is rendered when the user goes to the addinfo_patient route "GET" request
 
