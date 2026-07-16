@@ -6,4 +6,8 @@
     <button type="submit">Sign In</button>
 </form>
 
+{% if error %}
+    <p class="error">{{error}}}</p>
+{% endif %}
+
 <a href="/signup">New User? Create Account</a>

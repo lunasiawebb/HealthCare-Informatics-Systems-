@@ -14,6 +14,8 @@ def login():
         user=request.form.get("USER")
         pwrd=request.form.get("PASSWORD")
         userinfo=ehr.login(user)
+        if not userinfo:
+            return render_template("login.html" , error="Invalid user or password")
         truepwd=userinfo["password_hash"]
         truepwd=truepwd.encode("utf-8")
         pwrd = pwrd.encode("utf-8")
@@ -51,6 +53,9 @@ def menu():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
+    if session["role"] != "Doctor":
+        return "Access Denied", 403
+    
     if request.method == "POST":
 
         patient_id = ehr.add_patient(request.form)
