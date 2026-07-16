@@ -102,18 +102,33 @@ def search_patient(fname, lname, option):
 
 def add_patient(data):
 
-    columns = demographics[1:]  
+    columns = demographics[1:]  # Skip the Id column
 
     patient_id = str(uuid.uuid4())
 
     values = []
 
     for column in columns:
-        values.append(data.get(column))  # SAFE VERSION
 
-    print("VALUES BEING INSERTED:")
-    print(patient_id)
-    print(values)
+        value = data.get(column)
+
+    # Convert blank inputs into None (NULL in MySQL)
+        if value == "":
+            value = None
+
+    # Convert numeric fields to floats if they have a value
+        if column in ["HEALTHCARE_EXPENSES", "HEALTHCARE_COVERAGE", "INCOME"]:
+
+            if value is not None:
+                value = float(value)
+
+        values.append(value)
+
+    print("Patient ID:", patient_id)
+    print("Values being inserted:")
+
+    for column, value in zip(columns, values):
+        print(f"{column}: {repr(value)}")
 
     cursor.execute(
         f"""
@@ -123,10 +138,9 @@ def add_patient(data):
         (patient_id,) + tuple(values)
     )
 
-
     connection.commit()
 
-    print (f"Patient added successfully with ID: {patient_id}")
+    print(f"Patient added successfully with ID: {patient_id}")
 
     return patient_id
 

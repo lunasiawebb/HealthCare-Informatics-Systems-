@@ -53,8 +53,8 @@ def menu():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    if session["role"] != "Doctor":
-        return "Access Denied", 403
+    #if session["role"] != "Doctor":
+        #return "Access Denied", 403
     
     if request.method == "POST":
 
