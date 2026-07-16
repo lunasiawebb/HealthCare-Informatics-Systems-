@@ -116,3 +116,19 @@ li a:active {
     top: 15px; /* Places it 15px from the top. */
     right: 15px; /* Places it 15px from the right. */
 }
+
+.heart {
+  position: fixed;
+  bottom: -50px;
+  font-size: 24px;
+  color: #ff8fab;
+  opacity: 0.7;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
