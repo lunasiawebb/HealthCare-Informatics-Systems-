@@ -29,6 +29,10 @@
     <a href="/reports">Reports</a> <!-- A placeholder link for a future reports page. -->
 </div>
 
+<form action="{{ url_for('logout') }}" method="POST">
+    <button type="submit">Log Out</button>
+</form>
+
 <script>
 const sidebar = document.getElementById("sidebar"); <!-- Stores the sidebar element so JavaScript can control it. -->
 

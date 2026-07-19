@@ -53,9 +53,10 @@ def menu():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    #if session["role"] != "Doctor":
-        #return "Access Denied", 403
-    
+    if "employee_id" not in session:
+        return redirect("/login")
+    if session["role"] != "Doctor":
+        return "Access Denied", 403
     if request.method == "POST":
 
         patient_id = ehr.add_patient(request.form)
@@ -65,6 +66,8 @@ def add():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    if "employee_id" not in session:
+        return redirect("/login")
     if request.method == "POST": #if we are sending data back to backend 
         # we have a form that exists in search_patients.html to grad the first and last name of patient 
         fname = request.form.get("FIRST") #request submission of FIRST
@@ -77,7 +80,8 @@ def search():
 
 @app.route("/addmenu", methods=["GET", "POST"])
 def addinfo_patient():
-
+    if "employee_id" not in session:
+        return redirect("/login")
     
     patient_id=None
 
@@ -127,7 +131,12 @@ def addinfo_patient():
     
     return render_template("add.html") #the first page that is rendered when the user goes to the addinfo_patient route "GET" request
 
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
 
+    session.clear()
+
+    return redirect("/login")
   
 
 if __name__ == "__main__":
