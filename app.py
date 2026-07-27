@@ -15,17 +15,36 @@ def login():
         pwrd=request.form.get("PASSWORD")
         userinfo=ehr.login(user)
         if not userinfo:
+            #audit log
+            employee_id=None
+            action="LOGIN FAILED"
+            description="user login attempt failed"
+            table_name="users"
+            patient_id=None
+            ehr.auditlog(employee_id,patient_id,action,table_name,description)
+
+
             return render_template("login.html" , error="Invalid user or password")
         truepwd=userinfo["password_hash"]
         truepwd=truepwd.encode("utf-8")
         pwrd = pwrd.encode("utf-8")
+        
         if user and bcrypt.checkpw(pwrd, truepwd):
             print("You have logged in")
             
             session["employee_id"]=userinfo["employee_id"]
             session["user"]= userinfo["username"]
-            session["password"]=userinfo["password_hash"]
             session["role"]=userinfo["role"]
+            
+            #audit log
+            employee_id=session["employee_id"]
+            action="LOGIN SUCCESS"
+            description="user login attempt"
+            patient_id=None
+            table_name="users"
+            ehr.auditlog(employee_id,patient_id,action,table_name,description)
+
+
 
             return redirect("/menu")
 
@@ -58,8 +77,14 @@ def add():
     if session["role"] != "Doctor":
         return "Access Denied", 403
     if request.method == "POST":
-
-        patient_id = ehr.add_patient(request.form)
+        #audit log
+        patient_id = ehr.add_patient(request.form) 
+        employee_id=session["employee_id"]
+        action="CREATE"
+        description="User created a patient record"
+        table_name="patients"
+        ehr.auditlog(employee_id,patient_id,action,table_name,description)
+        
         return f"Success! ID: {patient_id}"
     #this is what is rendered when the user goes to the add route "GET" request
     return render_template("add_patient.html", columns=ehr.demographics[1:])  # Exclude the "Id" column since it will be generated automatically
@@ -74,6 +99,16 @@ def search():
         lname = request.form.get("LAST") #Requests Submission in LAST
         option = request.form.get("option")
         patient_data = ehr.search_patient(fname, lname, option) #runs the search_patient method and saves the return of the method
+        
+        #auditlogging 
+        employee_id=session["employee_id"]
+        patient_id= ehr.find_patient(fname, lname)
+        table_name=option
+        description="user viewed patient data"
+        action="VIEW"
+        ehr.auditlog(employee_id, patient_id, action, table_name, description)
+
+
         return render_template("search_results.html", option=option,results=patient_data) #return results from above function
 
     return render_template("search_patient.html")
@@ -117,6 +152,14 @@ def addinfo_patient():
             patient_id= request.form.get("patient_id")
 
             patient_data=ehr.add_info(patient_id, data, category, table)
+
+            #auditlogging
+            employee_id=session["employee_id"]
+            patient_id
+            action="UPDATE"
+            table_name=category
+            description="user updated patient information"
+            ehr.auditlog(employee_id,patient_id,action,table_name,description)
 
             print("This is the id", patient_id)
             print("this is the data", data)

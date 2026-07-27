@@ -73,7 +73,7 @@ def search_patient(fname, lname, option):
     # fetchone() returns a tuple like (Id,)
     patient_id = patient_id["Id"]
 
-    if option == "Demographics":
+    if option == "Patients":
         cursor.execute("SELECT * FROM patients WHERE Id=%s", (patient_id,))
         
         return cursor.fetchone()
@@ -178,8 +178,9 @@ def add_info(patient_id, data, category, table):
         
     return result
         
-
-
+def auditlog(employee_id, patient_id, action, table_name, description):
+    cursor.execute("INSERT INTO audits (employee_id, action, table_name, patient_id, description) VALUES (%s,%s,%s,%s,%s) ", (employee_id, action, table_name,patient_id, description))
+    connection.commit()
 # cursor.execute runs queries 
 # cursor.fetchall fetches results from queries 
 #connection.commit() saves changes to the database
