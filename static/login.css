@@ -1,0 +1,110 @@
+
+
+
+body {
+  background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 100%);
+  color: #d6336c;
+  animation: popIn 0.6s ease;
+  font-family: 'Segoe UI', Tahoma, sans-serif; /* Uses a clean, modern font for easy reading. */
+
+}
+
+form {
+  background:#fff8fa;
+  color: #d6336c;
+  padding: 40px 35px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(255, 143, 171, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 280px;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.heart {
+  position: fixed;
+  bottom: -50px;
+  font-size: 24px;
+  color: #ff8fab;
+  opacity: 0.7;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+  text-align: left;
+  color: #d6336c;
+  font-size: 2rem;
+  margin: 0;
+  z-index: 1;
+  text-shadow: 1px 1px 0px #ffd1dc;
+}
+
+input {
+  padding: 12px 14px;
+  border: 2px solid #ffc2d6;
+  border-radius: 14px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  background: #fff8fa;
+}
+
+input:focus {
+  border-color: #ff8fab;
+  box-shadow: 0 0 8px rgba(255, 143, 171, 0.5);
+  transform: scale(1.02);
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff8fab, #ff5c8a);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 14px rgba(255, 92, 138, 0.5);
+}
+
+button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+a {
+  text-align: left;
+  color: #d6336c;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 1;
+}
+
+a:hover {
+  text-decoration: underline;
+}
