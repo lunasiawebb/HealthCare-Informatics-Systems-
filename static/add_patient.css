@@ -19,7 +19,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* --- floating hearts in the background --- */
 .heart {
   position: fixed;
   bottom: -50px;
@@ -36,16 +35,16 @@ body {
   100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
 
-/* --- login card --- */
 form {
   background: white;
-  padding: 40px 35px;
-  border-radius: 24px;
+  padding: 28px 30px;
+  border-radius: 20px;
   box-shadow: 0 10px 30px rgba(255, 143, 171, 0.4);
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  width: 280px;
+  gap: 14px;
+  width: 100%;
+  max-width: 1000px;
   z-index: 1;
   animation: popIn 0.6s ease;
   margin-top: 20px;
@@ -55,6 +54,63 @@ form {
   0% { transform: scale(0.8); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 10px 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d6336c;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.field input {
+  padding: 6px 10px;
+  border: 1.5px solid #ffc2d6;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fff8fa;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  height: 32px;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #ff8fab;
+  box-shadow: 0 0 6px rgba(255, 143, 171, 0.5);
+}
+
+button[type="submit"] {
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff8fab, #ff5c8a);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(255, 92, 138, 0.5);
+}
+
 
 h1 {
   text-align: left;
@@ -93,14 +149,6 @@ button {
   transition: all 0.2s ease;
 }
 
-button:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 14px rgba(255, 92, 138, 0.5);
-}
-
-button:active {
-  transform: translateY(0) scale(0.97);
-}
 
 .error {
   color: #d6336c;
