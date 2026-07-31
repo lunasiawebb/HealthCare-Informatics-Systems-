@@ -68,7 +68,7 @@ def menu():
     if "employee_id" not in session:
         return redirect("/login")
     
-    return render_template("menu.html")
+    return render_template("menu.html", role=session["role"])
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -98,11 +98,20 @@ def search():
         fname = request.form.get("FIRST") #request submission of FIRST
         lname = request.form.get("LAST") #Requests Submission in LAST
         option = request.form.get("option")
+
+        if not fname or not lname:
+            return render_template(
+            "search_patient.html",error="Input a valid name.")
+       
         patient_data = ehr.search_patient(fname, lname, option) #runs the search_patient method and saves the return of the method
+        patient_id= ehr.find_patient(fname, lname)
+
+        if patient_id is None:
+            return render_template(
+            "search_patient.html",error="Patient not found.")
         
         #auditlogging 
         employee_id=session["employee_id"]
-        patient_id= ehr.find_patient(fname, lname)
         table_name=option
         description="user viewed patient data"
         action="VIEW"

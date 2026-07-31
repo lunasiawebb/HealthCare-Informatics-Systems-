@@ -65,7 +65,7 @@ def sign_up(first,last, user, password):
     return "Your Account Has Been Created!"
 
 def search_patient(fname, lname, option):
-
+    
     cursor.execute("SELECT Id FROM patients WHERE FIRST LIKE %s AND LAST LIKE %s", (f"%{fname}%", f"%{lname}%"))
     patient_id = cursor.fetchone()
     if patient_id is None:
