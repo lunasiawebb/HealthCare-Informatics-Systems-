@@ -4,17 +4,20 @@
   defined in app.py.
 -->
 <head>
-  <meta charset="UTF-8"> <!-- Tells the browser which character set to use. -->
+  <meta charset="UTF-8">
   <title>EHR System</title> <!-- Sets the tab title shown in the browser. -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}"> <!-- Links this page to the CSS file -->
 </head>
 <body>
 
 <h1> Welcome to the EHR System </h1> <!-- Main heading shown at the top of the page. -->
   <ul> <!-- Creates a list of menu links for the user to click. -->
-        <li><a href="/add">Add Patient</a></li> <!-- Links to the add patient page route in Flask. -->
-        <li><a href="/search">Search Patient</a></li> <!-- Links to the search page route. -->
-        <li><a href="/addmenu">Add Information to Patient</a></li> <!-- Links to the page that adds patient information. -->
+        {% if role == "Doctor" %}
+          <li><a href="/add">Add Patient</a></li> <!-- Links to the add patient page  -->
+          <li><a href="/addmenu">Add Information to Patient</a></li> <!-- Links to the page that adds patient information. -->
+        {% endif %}
+        <li><a href="/search">Search Patient</a></li> <!-- Links to the search page -->
+        
   </ul>
 
 </body>
@@ -30,7 +33,7 @@
 </div>
 
 <form action="{{ url_for('logout') }}" method="POST">
-    <button type="submit">Log Out</button>
+    <button id="logout" type="submit">Log Out</button>
 </form>
 
 <script>

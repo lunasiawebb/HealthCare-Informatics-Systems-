@@ -1,14 +1,28 @@
+
+<head>
 <title>Login</title>
-<h1>Login</h1>
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+
+</head>
+<body>
 <form method="POST">
+    <h1>Login</h1>
     Username: <input name="USER" placeholder="Username">
     Password: <input name="PASSWORD" placeholder="Password">
     <button type="submit">Sign In</button>
+    <a href="/signup">New User? Create Account</a>
 </form>
 
 {% if error %}
     <p class="error">{{error}}</p>
 {% endif %}
 
-<a href="/signup">New User? Create Account</a>
+
+</body>
+
+<span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
+<span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 55%; animation-duration: 7s; animation-delay: 1s;">♥</span>
+<span class="heart" style="left: 75%; animation-duration: 9s; animation-delay: 3s;">♥</span>
+<span class="heart" style="left: 90%; animation-duration: 6.5s; animation-delay: 0.5s;">♥</span>
 

@@ -7,15 +7,16 @@
 <h1>Add Patient</h1>
 
 <form method="POST">
-
-  {% for column in columns %}
-   <p> {{column}}: <input name="{{column}}"><br></p>
-  {% endfor %}
-
-    <button type="submit">Add</button>
-
+  <div class="form-grid">
+    {% for column in columns %}
+      <div class="field">
+        <label>{{ column }}</label>
+        <input name="{{ column }}">
+      </div>
+    {% endfor %}
+  </div>
+  <button type="submit">Add Patient</button>
 </form>
-
 <a href="/">Home</a>
 
 </body>

@@ -1,16 +1,31 @@
+<head>
+  <meta charset="UTF-8"> <!-- Tells the browser which character set to use. -->
+  <title>Search Patient</title> <!-- Sets the tab title shown in the browser. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='search_patient.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+</head>
+<body>
 <h1>Search Patient</h1>
-
 <form method="POST">
-
     FIRST: <input name="FIRST"><br>
     LAST: <input name="LAST"><br>
-
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <div class="button-row">
     <button type="submit" name="option" value="Patients">Demographics</button>
     <button type="submit" name="option" value="Allergies">Allergies</button>
     <button type="submit" name="option" value="Conditions">Conditions</button>
     <button type="submit" name="option" value="Encounters">Encounters</button>
-
+    </div>
 </form>
+</body>
+
+<span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
+<span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 55%; animation-duration: 7s; animation-delay: 1s;">♥</span>
+<span class="heart" style="left: 75%; animation-duration: 9s; animation-delay: 3s;">♥</span>
+<span class="heart" style="left: 90%; animation-duration: 6.5s; animation-delay: 0.5s;">♥</span>
+
 
 
 
