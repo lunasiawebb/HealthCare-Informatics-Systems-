@@ -110,3 +110,35 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d6336c;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.field p {
+  padding: 6px 10px;
+  border: 1.5px solid #ffc2d6;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fff8fa;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  height: 32px;
+}

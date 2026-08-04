@@ -1,9 +1,4 @@
-/*
-  This stylesheet controls the visual design of the EHR web pages.
-  It tells the browser how each HTML element should look and how the
-  sidebar menu should behave when it is opened or closed.
-  color palette
-*/
+
 
 
 body {
@@ -84,7 +79,7 @@ li a:active {
     display: block; /* Makes each sidebar link appear as its own button-like block. */
     padding: 15px; /* Adds space inside each sidebar link. */
     text-decoration: none; /* Removes the underline from the links. */
-    color: black; /* Makes the sidebar text black for readability. */
+    color: black; 
 }
 
 #sidebar a:hover {
