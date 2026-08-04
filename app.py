@@ -28,7 +28,6 @@ def login():
         truepwd=userinfo["password_hash"]
         truepwd=truepwd.encode("utf-8")
         pwrd = pwrd.encode("utf-8")
-        
         if user and bcrypt.checkpw(pwrd, truepwd):
             print("You have logged in")
             
@@ -84,8 +83,8 @@ def add():
         description="User created a patient record"
         table_name="patients"
         ehr.auditlog(employee_id,patient_id,action,table_name,description)
-        
-        return f"Success! ID: {patient_id}"
+        success=f"Success! ID: {patient_id}"
+        return render_template("add_patient.html", success=success)
     #this is what is rendered when the user goes to the add route "GET" request
     return render_template("add_patient.html", columns=ehr.demographics[1:])  # Exclude the "Id" column since it will be generated automatically
 
@@ -94,36 +93,37 @@ def search():
     if "employee_id" not in session:
         return redirect("/login")
     if request.method == "POST": #if we are sending data back to backend 
-        # we have a form that exists in search_patients.html to grad the first and last name of patient 
-        fname = request.form.get("FIRST") #request submission of FIRST
-        lname = request.form.get("LAST") #Requests Submission in LAST
-        option = request.form.get("option")
+        stage = request.form.get("stage")
+        if stage == "find patient":
+            fname = request.form.get("FIRST") #request submission of FIRST
+            lname = request.form.get("LAST") #Requests Submission in LAST
+            option = request.form.get("option")
 
-        if not fname or not lname:
-            return render_template(
-            "search_patient.html",error="Input a valid name.")
+            if not fname or not lname:
+                return render_template(
+                "search_patient.html",error="Input a valid name.", stage="find patient")
        
-        patient_data = ehr.search_patient(fname, lname, option) #runs the search_patient method and saves the return of the method
-        patient_id= ehr.find_patient(fname, lname)
+            patient_data = ehr.search_patient(fname, lname, option) #runs the search_patient method and saves the return of the method
+            patient_id= ehr.find_patient(fname, lname)
 
-        if patient_id is None:
-            return render_template(
-            "search_patient.html",error="Patient not found.")
+            if patient_id is None:
+                return render_template(
+                "search_patient.html",error="Patient not found.", stage="find patient")
         
-        #auditlogging 
-        employee_id=session["employee_id"]
-        table_name=option
-        description="user viewed patient data"
-        action="VIEW"
-        ehr.auditlog(employee_id, patient_id, action, table_name, description)
+            #auditlogging 
+            employee_id=session["employee_id"]
+            table_name=option
+            description="user viewed patient data"
+            action="VIEW"
+            ehr.auditlog(employee_id, patient_id, action, table_name, description)
 
 
-        return render_template("search_results.html", option=option,results=patient_data) #return results from above function
+            return render_template("search_patient.html", stage="show results", option=option,results=patient_data) #return results from above function
 
-    return render_template("search_patient.html")
+    return render_template("search_patient.html", stage="find patient")
 
-@app.route("/addmenu", methods=["GET", "POST"])
-def addinfo_patient():
+@app.route("/update", methods=["GET", "POST"])
+def update_patient():
     if "employee_id" not in session:
         return redirect("/login")
     
@@ -131,7 +131,7 @@ def addinfo_patient():
 
     if request.method == "POST": #the add.html is a submission form and will perform these actions when the user submits the form
         stage=request.form.get("stage") #since we have multiple pages in the route, stage determines which page we are on find or update
-        if stage == "find":
+        if stage == "find patient":
             fname= request.form.get("FIRST")
            
             lname= request.form.get("LAST")
@@ -146,9 +146,9 @@ def addinfo_patient():
             if patient_id:
 
                 #this is the stage==update page we redirect to after the form of add.html is submitted
-                return render_template("add2.html", category=category, patient_id=patient_id, table=table) 
+                return render_template("updatefind.html", stage="update patient", category=category, patient_id=patient_id, table=table) 
 
-        elif stage == "update":
+        elif stage == "update patient":
             data = {}
 
             category=request.form.get("category")
@@ -164,7 +164,6 @@ def addinfo_patient():
 
             #auditlogging
             employee_id=session["employee_id"]
-            patient_id
             action="UPDATE"
             table_name=category
             description="user updated patient information"
@@ -175,14 +174,32 @@ def addinfo_patient():
             print("this is the category", category)
             print("this is the table",table)
             
-            #patient_data=ehr.add_info(patient_id, data, category, table)
-             #this is the tablechoice that was passed from the add.html page to determine which table to add info too
+            patient_data=ehr.add_info(patient_id, data, category, table)
 
             
-            #return render_template("addview.html", results=patient_data)
+            return render_template("updatefind.html", stage="view changes", results=patient_data)
     
-    return render_template("add.html") #the first page that is rendered when the user goes to the addinfo_patient route "GET" request
+    return render_template("updatefind.html", stage="find patient") #the first page that is rendered when the user goes to the update_patient route "GET" request
 
+
+@app.route("/lab_results" , methods=["GET", "POST"])
+def lab_results():
+    if "employee_id" not in session:
+        return redirect("/login")
+
+    if request.method =="POST":
+        fname = request.form.get("FIRST")
+        lname = request.form.get("LAST")
+        patient_id = ehr.find_patient(fname, lname)
+        patient_data = None
+        if patient_id:
+            patient_data = ehr.lab_results(patient_id)
+            return render_template("lab_results.html", stage="show results", results=patient_data)
+        else:
+            error="Patient not found."
+            return render_template("lab_results.html", stage="find patient", error=error)
+          
+    return render_template("lab_results.html", stage="find patient") 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 
