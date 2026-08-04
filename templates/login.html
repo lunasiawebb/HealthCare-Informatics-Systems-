@@ -5,18 +5,19 @@
 
 </head>
 <body>
+
 <form method="POST">
     <h1>Login</h1>
     Username: <input name="USER" placeholder="Username">
-    Password: <input name="PASSWORD" placeholder="Password">
+    Password: <input type="password" name="PASSWORD" placeholder="Password">
     <button type="submit">Sign In</button>
     <a href="/signup">New User? Create Account</a>
 </form>
 
+
 {% if error %}
     <p class="error">{{error}}</p>
 {% endif %}
-
 
 </body>
 

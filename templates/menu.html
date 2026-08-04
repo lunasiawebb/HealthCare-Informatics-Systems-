@@ -14,7 +14,7 @@
   <ul> <!-- Creates a list of menu links for the user to click. -->
         {% if role == "Doctor" %}
           <li><a href="/add">Add Patient</a></li> <!-- Links to the add patient page  -->
-          <li><a href="/addmenu">Add Information to Patient</a></li> <!-- Links to the page that adds patient information. -->
+          <li><a href="/update">Update A Patient</a></li> <!-- Links to the page that adds patient information. -->
         {% endif %}
         <li><a href="/search">Search Patient</a></li> <!-- Links to the search page -->
         
@@ -26,9 +26,9 @@
 
 <div id="sidebar"> <!-- The hidden side menu container. Its style comes from style.css. -->
     <button id="close-btn">✕</button> <!-- The button that closes the sidebar. -->
-    <a href="/">Home</a> <!-- Takes the user back to the home page. -->
+    <a href="/menu">Home</a> <!-- Takes the user back to the home page. -->
     <a href="/search">Search Patient</a> <!-- Reuses the search route. -->
-    <a href="/addmenu">Add Information</a> <!-- Reuses the add-info route. -->
+    <a href="/update">Update A Patient</a> <!-- Reuses the add-info route. -->
     <a href="/reports">Reports</a> <!-- A placeholder link for a future reports page. -->
 </div>
 

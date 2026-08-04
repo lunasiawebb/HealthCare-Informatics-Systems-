@@ -6,6 +6,7 @@
 <body>
 <h1>Add Patient</h1>
 
+{% if not success %}
 <form method="POST">
   <div class="form-grid">
     {% for column in columns %}
@@ -17,7 +18,13 @@
   </div>
   <button type="submit">Add Patient</button>
 </form>
-<a href="/">Home</a>
+{% endif %}
+
+{% if success %}
+    <p>{{ success }}</p>
+{% endif %}
+
+<a href="/menu">Home</a>
 
 </body>
 <span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
