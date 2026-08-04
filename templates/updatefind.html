@@ -1,0 +1,62 @@
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='add_patient.css') }}">
+</head>
+<body>
+{% if stage == "find patient" %}
+<h1> Find Your Patient To Update</h1>
+    <form method="POST">
+            <input type="hidden" name="stage" value="find patient">
+
+            FIRST: <input name="FIRST">
+            LAST: <input name="LAST">
+        <label for="category">Choose a Category:</label>
+        <select name="category" class="dropdown">
+        <option value="patients">Demographics</option>
+        <option value="allergies">Allergies</option>
+        <option value="conditions">Conditions</option>
+        <option value="encounters">Encounters</option>
+        </select>
+        <button type="submit">Find Patient</button> 
+    </form>
+{% endif %}
+
+{% if stage == "update patient" %}
+    <form method="POST">
+        <input type="hidden" name="category" value="{{category}}">
+        <input type="hidden" name="stage" value="update patient">
+        <input type="hidden" name="patient_id" value="{{patient_id}}">
+        <div class="form-grid">
+        {% for column in table %}
+        <div class="field">
+            <label>{{ column }}</label> <input name="{{ column }}"><br>
+        </div>
+        {% endfor %}
+        <button type=submit>Submit</button>
+        </div>
+    </form>
+{% endif %}
+
+{% if stage == "view changes" %}
+    <input type="hidden" name="stage" value="view changes">
+    <h1>New Information Added</h1> 
+    <form>
+    <div class="form-grid">
+    {% for label, value in results.items() %}
+        <div class="field">
+            <label>{{ label }}</label> <p>{{ value }}</p>
+        </div>
+    {% endfor %}
+    </div>
+    </form>
+{% endif %}
+
+<a href="/menu">Home</a>
+
+</body>
+<span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
+<span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 55%; animation-duration: 7s; animation-delay: 1s;">♥</span>
+<span class="heart" style="left: 75%; animation-duration: 9s; animation-delay: 3s;">♥</span>
+<span class="heart" style="left: 90%; animation-duration: 6.5s; animation-delay: 0.5s;">♥</span>
+
+
