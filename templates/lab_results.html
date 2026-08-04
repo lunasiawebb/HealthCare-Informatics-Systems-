@@ -1,0 +1,39 @@
+<title>
+    Lab Results
+</title>
+
+<h1>Lab Results Viewer</h1>
+
+{% if stage == "find patient" %}
+    <body>
+    <div class="input-container">
+    <form method="POST">
+    <p>
+        FIRST:  <input name="FIRST">
+        LAST:  <input name="LAST">
+
+    </p>
+    <p>
+        <button type="submit">Find</button>
+    </p>
+    </form>
+    </div>
+    </body>
+{% endif %}
+
+{% if stage == "show results" %}
+    <div class="form-grid"></div>
+    {% for item in results %}
+        <div class="form-grid-item">
+        {% for label, value in item.items() %}
+            <p>{{ label }}: {{ value }}</p>
+        {% endfor %}
+        <hr>   
+    </div>
+    {% endfor %}
+    </div>
+{% endif %}
+
+<a href="/menu">Home</a>
+
+
