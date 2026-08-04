@@ -3,9 +3,12 @@
   <title>Search Patient</title> <!-- Sets the tab title shown in the browser. -->
   <link rel="stylesheet" href="{{ url_for('static', filename='search_patient.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
 </head>
+
+{% if stage == "find patient" %}
 <body>
 <h1>Search Patient</h1>
 <form method="POST">
+    <input type="hidden" name="stage" value="find patient">
     FIRST: <input name="FIRST"><br>
     LAST: <input name="LAST"><br>
     {% if error %}
@@ -19,6 +22,42 @@
     </div>
 </form>
 </body>
+{% endif %}
+
+{% if stage == "show results" %}
+    <input type="hidden" name="stage" value="show results">
+
+    <h1>{{ option }}</h1>
+
+    {% if option == "Patients" %}
+        
+        <div class="form-grid">
+        {% for label, value in results.items() %}
+            <div class="field">
+                <label>{{ label }}</label> <p>{{ value }}</p>
+            </div>
+        {% endfor %}
+        </div>
+        
+
+    {% else %}
+        
+        {% for item in results %}
+            <div class="form-grid">
+            {% for label, value in item.items() %}
+                <div class="field">
+                    <label>{{ label }}</label> <p>{{ value }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+        
+
+    {% endif %}
+{% endif %}
+
+Return to <a href="/search">Search</a>
+Or <a href="/menu">Home</a>
 
 <span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
 <span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
