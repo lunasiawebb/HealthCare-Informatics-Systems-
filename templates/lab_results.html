@@ -1,39 +1,59 @@
-<title>
-    Lab Results
-</title>
+<head>
+  <meta charset="UTF-8"> <!-- Tells the browser which character set to use. -->
+  <title>Lab Results Viewer</title> <!-- Sets the tab title shown in the browser. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lab_results.css') }}"> <!-- Links this page to the CSS file in the static folder. -->
+</head>
 
 <h1>Lab Results Viewer</h1>
-
-{% if stage == "find patient" %}
-    <body>
+<body>
     <div class="input-container">
     <form method="POST">
-    <p>
-        FIRST:  <input name="FIRST">
-        LAST:  <input name="LAST">
-
-    </p>
-    <p>
-        <button type="submit">Find</button>
-    </p>
+        <p>
+        <label>FIRST:</label>  <input name="FIRST">
+        <label>LAST:</label>   <input name="LAST">
+        <label>DOCTOR:</label>  <input name="DOCTOR_LAST">
+        <select name="TYPE" class="dropdown">
+            <option value="">--Select Test Type--</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Cardiac">Cardiac</option>
+            <option value="CBC">CBC</option>
+            <option value="Microbiology">Microbiology</option>
+            <option value="Thyroid">Thyroid</option>
+            <option value="Urinalysis">Urinalysis</option>
+        </select>
+       
+        <button type="submit">Search</button>
+         </p>
     </form>
     </div>
-    </body>
-{% endif %}
+    <table class="lab-table">
+    <thead>
+        <tr>
+            {% for label, value in results[0].items() %}
+                <th>{{ label }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
 
-{% if stage == "show results" %}
-    <div class="form-grid"></div>
-    {% for item in results %}
-        <div class="form-grid-item">
-        {% for label, value in item.items() %}
-            <p>{{ label }}: {{ value }}</p>
+    <tbody>
+        {% for item in results %}
+        <tr>
+            {% for label, value in item.items() %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
         {% endfor %}
-        <hr>   
-    </div>
-    {% endfor %}
-    </div>
-{% endif %}
+    </tbody>
+</table>
+</body>
 
 <a href="/menu">Home</a>
+
+<span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
+<span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 55%; animation-duration: 7s; animation-delay: 1s;">♥</span>
+<span class="heart" style="left: 75%; animation-duration: 9s; animation-delay: 3s;">♥</span>
+<span class="heart" style="left: 90%; animation-duration: 6.5s; animation-delay: 0.5s;">♥</span>
+
 
 
