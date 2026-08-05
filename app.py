@@ -97,7 +97,7 @@ def search():
         if stage == "find patient":
             fname = request.form.get("FIRST") #request submission of FIRST
             lname = request.form.get("LAST") #Requests Submission in LAST
-            option = request.form.get("option")
+            option = request.form.get("TYPE")
 
             if not fname or not lname:
                 return render_template(
@@ -186,20 +186,19 @@ def update_patient():
 def lab_results():
     if "employee_id" not in session:
         return redirect("/login")
-
+    lablist=ehr.lab_results_patient(patient_id=None, doctor_last=None, type=None)
     if request.method =="POST":
         fname = request.form.get("FIRST")
         lname = request.form.get("LAST")
-        patient_id = ehr.find_patient(fname, lname)
-        patient_data = None
-        if patient_id:
-            patient_data = ehr.lab_results(patient_id)
-            return render_template("lab_results.html", stage="show results", results=patient_data)
+        doctor_last = request.form.get("DOCTOR_LAST")
+        type = request.form.get("TYPE")
+        if fname and lname:
+            patient_id = ehr.find_patient(fname, lname)
         else:
-            error="Patient not found."
-            return render_template("lab_results.html", stage="find patient", error=error)
-          
-    return render_template("lab_results.html", stage="find patient") 
+            patient_id = None
+        lablist = ehr.lab_results_patient(patient_id=patient_id, doctor_last=doctor_last, type=type)
+        return render_template("lab_results.html", results=lablist) 
+    return render_template("lab_results.html", results=lablist) 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 

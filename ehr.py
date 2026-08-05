@@ -182,9 +182,37 @@ def auditlog(employee_id, patient_id, action, table_name, description):
     cursor.execute("INSERT INTO audits (employee_id, action, table_name, patient_id, description) VALUES (%s,%s,%s,%s,%s) ", (employee_id, action, table_name,patient_id, description))
     connection.commit()
 
-def lab_results(patient_id):
-    cursor.execute("SELECT * FROM lab_results WHERE PATIENT=%s", (patient_id,))
-    return cursor.fetchall()
+def lab_results_patient(patient_id,doctor_last,type):
+    doctor_id= None
+    if doctor_last:
+        cursor.execute("SELECT employee_id FROM employees WHERE last_name LIKE %s", (f"%{doctor_last}%",))
+        doctor = cursor.fetchone()
+        if doctor:
+            doctor_id = doctor["employee_id"]
+    if patient_id and doctor_id and type:
+        cursor.execute("SELECT * FROM lab_results WHERE patient_id=%s AND ordered_by=%s AND test_category=%s", (patient_id, doctor_id, type))
+        return cursor.fetchall()
+    elif patient_id and not doctor_id and not type:
+        cursor.execute("SELECT * FROM lab_results WHERE patient_id=%s", (patient_id,))
+        return cursor.fetchall()
+    elif doctor_id and not patient_id and not type:
+        cursor.execute("SELECT * FROM lab_results WHERE ordered_by=%s", (doctor_id,))
+        return cursor.fetchall()
+    elif type and not patient_id and not doctor_id:
+        cursor.execute("SELECT * FROM lab_results WHERE test_category=%s", (type,))
+        return cursor.fetchall()
+    elif patient_id and doctor_id and not type:
+        cursor.execute("SELECT * FROM lab_results WHERE patient_id=%s AND ordered_by=%s", (patient_id, doctor_id))
+        return cursor.fetchall()
+    elif patient_id and type and not doctor_id:
+        cursor.execute("SELECT * FROM lab_results WHERE patient_id=%s AND test_category=%s", (patient_id, type))
+        return cursor.fetchall()
+    elif doctor_id and type and not patient_id:
+        cursor.execute("SELECT * FROM lab_results WHERE ordered_by=%s AND test_category=%s", (doctor_id, type))
+        return cursor.fetchall()
+    else:
+        cursor.execute("SELECT * FROM lab_results")
+        return cursor.fetchall()
 
 # cursor.execute runs queries 
 # cursor.fetchall fetches results from queries 
