@@ -9,17 +9,21 @@
 <h1>Search Patient</h1>
 <form method="POST">
     <input type="hidden" name="stage" value="find patient">
-    FIRST: <input name="FIRST"><br>
-    LAST: <input name="LAST"><br>
+    <p>
+    <label>FIRST:</label> <input name="FIRST">
+    <label>LAST:</label> <input name="LAST">
     {% if error %}
-        <p>{{ error }}</p>
+        {{ error }}
     {% endif %}
-    <div class="button-row">
-    <button type="submit" name="option" value="Patients">Demographics</button>
-    <button type="submit" name="option" value="Allergies">Allergies</button>
-    <button type="submit" name="option" value="Conditions">Conditions</button>
-    <button type="submit" name="option" value="Encounters">Encounters</button>
-    </div>
+    <select name="TYPE" class="dropdown">
+        <option value="">--Select Test Type--</option>
+        <option value="Patients">Patients</option>
+        <option value="Allergies">Allergies</option>
+        <option value="Conditions">Conditions</option>
+        <option value="Encounters">Encounters</option>
+    </select>
+    <button type="submit">Search</button>
+    </p>
 </form>
 </body>
 {% endif %}
@@ -56,9 +60,7 @@
     {% endif %}
 {% endif %}
 
-Return to <a href="/search">Search</a>
-Or <a href="/menu">Home</a>
-
+<p>Return to <a href="/search">Search</a> Or <a href="/menu">Home</a></p>
 <span class="heart" style="left: 10%; animation-duration: 6s;">♥</span>
 <span class="heart" style="left: 30%; animation-duration: 8s; animation-delay: 2s;">♥</span>
 <span class="heart" style="left: 55%; animation-duration: 7s; animation-delay: 1s;">♥</span>

@@ -1,9 +1,10 @@
 <head>
+<title>Update Patient</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='add_patient.css') }}">
 </head>
 <body>
 {% if stage == "find patient" %}
-<h1> Find Your Patient To Update</h1>
+<h1> Find Patient</h1>
     <form method="POST">
             <input type="hidden" name="stage" value="find patient">
 
@@ -31,7 +32,7 @@
             <label>{{ column }}</label> <input name="{{ column }}"><br>
         </div>
         {% endfor %}
-        <button type=submit>Submit</button>
+        <button type="submit">Submit</button>
         </div>
     </form>
 {% endif %}

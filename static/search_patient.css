@@ -1,21 +1,75 @@
 
 body {
-  background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 100%);
+  margin: 0;
   color: #d6336c;
-  animation: popIn 0.6s ease;
-  font-family: 'Segoe UI', Tahoma, sans-serif; /* Uses a clean, modern font for easy reading. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  
+  padding: 40px 0 40px 80px;  
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #ffe4ec, #ffc2d6, #ffd1e8);
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+  position: relative;
+
+}
+input {
+  padding: 3px ;
+  border: 1px solid #ffc2d6;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  background: #fff8fa;
+  width: 150px;
+}
+
+input:focus {
+  border-color: #ff8fab;
+  box-shadow: 0 0 8px rgba(255, 143, 171, 0.5);
+  transform: scale(1.02);
+}
+
+
+h1 {
+  text-align: left;
+  color: #d6336c;
+  font-size: 2rem;
+  margin: 0;
+  z-index: 1;
+  text-shadow: 1px 1px 0px #ffd1dc;
 }
 
 form {
-  background:#fff8fa;
-  color: #d6336c;
-  padding: 40px 35px;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(255, 143, 171, 0.4);
-  gap: 18px;
-  width: 450px;
+  padding: 0px 10px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  height: auto;
+  width: 100%;
+  max-width: 1000px;
   z-index: 1;
-  margin-top: 20px;
+  animation: popIn 0.6s ease;
+  margin-top: 0px;
+}
+
+.dropdown {
+  padding: 3px;
+  color:#d6336c;
+  border: 1px solid #ffc2d6;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fff8fa;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dropdown:focus {
+  border-color: #ff8fab;
+  box-shadow: 0 0 8px rgba(255, 143, 171, 0.5);
+  transform: scale(1.02);
 }
 
 @keyframes gradientShift {
@@ -45,31 +99,6 @@ form {
   100% { transform: scale(1); opacity: 1; }
 }
 
-h1 {
-  text-align: left;
-  color: #d6336c;
-  font-size: 2rem;
-  margin: 0px;
-  z-index: 1;
-  text-shadow: 1px 1px 0px #ffd1dc;
-}
-
-input {
-  padding: 12px 14px;
-  border: 2px solid #ffc2d6;
-  border-radius: 14px;
-  outline: none;
-  font-size: 14px;
-  margin-bottom: 10px;
-  transition: all 0.25s ease;
-  background: #fff8fa;
-}
-
-input:focus {
-  border-color: #ff8fab;
-  box-shadow: 0 0 8px rgba(255, 143, 171, 0.5);
-  transform: scale(1.02);
-}
 
 .button-row {
   display: flex;
@@ -78,16 +107,21 @@ input:focus {
 }
 
 button {
-  padding: 12px;
+  padding: 3px;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, #ff8fab, #ff5c8a);
+  background: #ff8fab;;
   color: white;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
+  width: 100px;
+  height: 23px;
+  float: right;
   transition: all 0.2s ease;
 }
+
+
 
 button:hover {
   transform: translateY(-3px) scale(1.03);
