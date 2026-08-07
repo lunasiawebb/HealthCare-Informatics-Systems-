@@ -192,11 +192,15 @@ def lab_results():
         lname = request.form.get("LAST")
         doctor_last = request.form.get("DOCTOR_LAST")
         type = request.form.get("TYPE")
-        if fname and lname:
+        patient_id = None
+        if fname or lname:
             patient_id = ehr.find_patient(fname, lname)
-        else:
-            patient_id = None
+            if not patient_id:
+                return render_template("lab_results.html", error="this patient was not found")
+
         lablist = ehr.lab_results_patient(patient_id=patient_id, doctor_last=doctor_last, type=type)
+        if not lablist:
+            return render_template("lab_results.html", error="No lab results found for the given criteria.")
         return render_template("lab_results.html", results=lablist) 
     return render_template("lab_results.html", results=lablist) 
 @app.route("/logout", methods=["GET", "POST"])
